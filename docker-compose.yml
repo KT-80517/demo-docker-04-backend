@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build: ./frontend
+    image: demo-frontend
+    container_name: demo-frontend
+    ports:
+      - "8080:80"   # Added space after '-'
+
+  new-frontend:
+    build: ./frontend
+    image: demo-frontend
+    container_name: new-frontend
+    ports:
+      - "8081:80"
+
+  backend:
+    build: ./backend
+    image: demo-backend
+    container_name: demo-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATA_SOURCE=json   # Changed ':' to '='
+    volumes:
+      - todo-data:/app/data
+
+volumes:
+  todo-data:

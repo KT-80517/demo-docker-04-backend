@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app-header">
+        <h1>ToDo</h1>
+        <p class="subtitle" id="remaining">&nbsp;</p>
+      </header>
+
+      <form class="todo-form" id="new-todo-form">
+        <div class="row">
+          <input type="text" id="new-title" placeholder="What needs to be done?"
+                 aria-label="New task title" maxlength="255" autocomplete="off" />
+          <button type="submit" class="primary" id="add-button" disabled>Add</button>
+        </div>
+        <button type="button" class="link" id="show-notes">+ Add notes</button>
+        <textarea id="new-notes" rows="2" placeholder="Notes (optional)"
+                  aria-label="New task notes" hidden></textarea>
+      </form>
+
+      <div class="error" id="error" role="alert" hidden>
+        <span id="error-text"></span>
+        <button type="button" class="link" id="retry">Retry</button>
+        <button type="button" class="icon" id="dismiss-error" aria-label="Dismiss error">×</button>
+      </div>
+
+      <nav class="filters" aria-label="Filter todos">
+        <button type="button" data-filter="all" class="active" aria-pressed="true">All <span class="count"></span></button>
+        <button type="button" data-filter="active" aria-pressed="false">Active <span class="count"></span></button>
+        <button type="button" data-filter="completed" aria-pressed="false">Completed <span class="count"></span></button>
+      </nav>
+
+      <p class="empty" id="empty">Loading…</p>
+      <ul class="todo-list" id="todo-list" hidden></ul>
+
+      <footer class="app-footer">
+        <button type="button" class="link" id="clear-completed" hidden></button>
+        <span class="source" id="source"></span>
+      </footer>
+    </main>
+
+    <script src="scripts/config.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+services:
+
+  database:
+    image: mysql:8.4
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: todo_app
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: todo_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"todo\" -p\"todo_password\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  frontend:
+    build: ./frontend
+    image: demo-frontend
+    container_name: demo-frontend
+    ports:
+      - "8080:80"
+
+  backend:
+    build: ./backend
+    image: demo-backend
+    container_name: demo-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATA_SOURCE: mysql
+      MYSQL_HOST: database
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: todo_app
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: todo_password
+    volumes:
+      - todo-data:/app/data
+    depends_on:
+      database:
+        condition: service_healthy
+    
+
+volumes:
+  todo-data:
+  mysql-data:
